@@ -2,6 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+	  <groupId>com.project</groupId>
+	  <artifactId>project</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
   <groupId>com.cache</groupId>
   <artifactId>project-cache</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -23,10 +29,15 @@
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+		<groupId>com.googlecode.xmemcached</groupId>
+		<artifactId>xmemcached</artifactId>
+		<version>2.0.0</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>redis.clients</groupId>
+	    <artifactId>jedis</artifactId>
+	    <version>2.9.0</version>
+	</dependency>
   </dependencies>
 </project>

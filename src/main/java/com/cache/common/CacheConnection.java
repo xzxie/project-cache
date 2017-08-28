@@ -1,53 +1,42 @@
 package com.cache.common;
 
+import org.apache.log4j.Logger;
+
+import com.cache.localcache.LocalCache;
+import com.cache.memcache.Memcache;
+import com.cache.redis.RedisCache;
+import com.cache.util.Constant;
+
 
 public class CacheConnection {
 
-	private String host;
-	private int port;
-	private Cache cache;
+	protected static final Logger logger = Logger.getLogger(CacheConnection.class);
 	
-	public CacheConnection() {
-		
+	private Class<Cache<?,?>> cacheClazz;
+	
+	public CacheConnection(Class<Cache<?,?>> cacheClazz) {
+		this.cacheClazz = cacheClazz;
 	}
 	
-	public CacheConnection(String host, int port, Cache cache) {
-		this.host = host;
-		this.port = port;
-		this.cache = cache;
-	}
-	
+	@SuppressWarnings("unchecked")
 	public CacheConnection getConnection() {
-		CacheConnectionFactory factory = CacheConnectionFactory.getFactory();
-		return factory.getCacheConnection(cache.getClass());
-	}
-	
-	
-	/**
-	 * getter-setter
-	 */
-	public String getHost() {
-		return host;
-	}
-
-	public void setHost(String host) {
-		this.host = host;
-	}
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
-
-	public Cache getCache() {
-		return cache;
-	}
-
-	public void setCache(Cache cache) {
-		this.cache = cache;
+		if (cacheClazz == null) {
+			cacheClazz = (Class<Cache<?, ?>>) Constant.default_cache;
+		}
+		Cache<?,?> cache;
+		try {
+			cache = cacheClazz.newInstance();
+			if (cache instanceof LocalCache) {
+				
+			} else if (cache instanceof Memcache) {
+				
+			} else if (cache instanceof RedisCache) {
+				
+			}
+		} catch (Exception e) {
+			logger.error("Init cache object error", e);
+		}
+		return this;
 	}
 
 }

@@ -4,7 +4,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class DefaultCache<K,V> implements Cache<K,V> {
+public class DefaultCache<K,V> extends SimpleConcurrentMap<K, V> implements Cache<K,V> {
+
+	public DefaultCache(Map<K, V> map) {
+		super(map);
+	}
 
 	public boolean isEnabled() {
 		return true;
